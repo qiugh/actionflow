@@ -41,7 +41,7 @@ class Processor {
     this.asyn = options.asyn;
     if (!this.asyn) {
       this.func = function (params, callback) {
-        callback(null, func(params));
+        callback(null, options.func(params));
       }
     }
   }
