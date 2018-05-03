@@ -1,6 +1,6 @@
 {
-  "name": "fflow",
-  "version": "0.0.1",
+  "name": "processflow",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qiugh/fflow.git"
+    "url": "git+https://github.com/qiugh/processflow.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/qiugh/fflow/issues"
+    "url": "https://github.com/qiugh/processflow/issues"
   },
-  "homepage": "https://github.com/qiugh/fflow#readme"
+  "homepage": "https://github.com/qiugh/processflow#readme"
 }
