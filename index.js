@@ -1,6 +1,5 @@
 class Flow {
   constructor(options) {
-    super();
     options = options || {};
     this.processors = [];
     this.ignoreError = options.ignoreError;
@@ -32,7 +31,6 @@ class Flow {
 
 class Processor {
   constructor(options) {
-    super();
     options = options || {};
     if (typeof options.name !== 'string' || options.name === '')
       throw new Error('processor name must be valid string');
