@@ -1,0 +1,19 @@
+{
+  "name": "node-processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qiugh/node-processor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qiugh/node-processor/issues"
+  },
+  "homepage": "https://github.com/qiugh/node-processor#readme"
+}

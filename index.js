@@ -1,8 +1,9 @@
-  class Flow {
-  constructor(ignoreError) {
+class Flow {
+  constructor(options) {
     super();
+    options = options || {};
     this.processors = [];
-    this.ignoreError = ignoreError;
+    this.ignoreError = options.ignoreError;
   }
 
   add(processor, idx) {
@@ -25,21 +26,22 @@
   execute(xargs, callback) {
     let self = this;
     let funcs = self.processors.map(processor => processor.func);
-    asyncFlow({ funcs: funcs, xargs: xargs, ignoreError: self.ignoreError }, callback);
+    asynFlow({ funcs: funcs, xargs: xargs, ignoreError: self.ignoreError }, callback);
   }
 }
 
 class Processor {
-  super();
-  constructor(name, func, async) {
-    if (typeof name !== 'string' || name === '')
+  constructor(options) {
+    super();
+    options = options || {};
+    if (typeof options.name !== 'string' || options.name === '')
       throw new Error('processor name must be valid string');
-    if (typeof func !== 'function')
+    if (typeof options.func !== 'function')
       throw new Error('processor func must be a function');
-    this.name = name;
-    this.func = func;
-    this.async = async;
-    if (!this.async) {
+    this.name = options.name;
+    this.func = options.func;
+    this.asyn = options.asyn;
+    if (!this.asyn) {
       this.func = function (params, callback) {
         callback(null, func(params));
       }
@@ -47,7 +49,7 @@ class Processor {
   }
 }
 
-function asyncFlow(options, callback) {
+function asynFlow(options, callback) {
   if (!options) return;
   let funcs = options.funcs, xargs = options.xargs, ignoreError = options.ignoreError;
   if (typeof funcs === 'function') funcs = [funcs];
@@ -91,4 +93,4 @@ function asyncFlow(options, callback) {
   }
 }
 
-module.exports = { asyncFlow, Processor, Flow };
+module.exports = { asynFlow, Processor, Flow };
