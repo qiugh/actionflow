@@ -100,5 +100,44 @@ asynFlow({funcs: funcs3, xargs: xargs2}, function(error,result){
 ```
 
 # Processor
+In order to be compatible with synchronous function and to make a certain abstract of process flow, processor class is necessary. 
+One processor is an object which contains a name and a function with a flag to mark whether it is asynchronous.  
+```javascript
+let processor1 = new Processor({
+  asyn: true,
+  name: 'step1',
+  func: function(options,callback){
+    console.log('step1', options);
+    setTimeout(callback, 1000, null, 'result1');
+  }
+});
+```
+
+If the function is a synchronous function, it will be wrapped to accept one callback.  
+```javascript
+let processor2 = new Processor({
+  asyn: false,
+  name: 'step2',
+  func: function(options){
+    console.log('step2', options);
+    return 'something';
+  }
+});
+```
 
 # Flow
+
+In essence flow is a collection of processor.
+Flow can add or remove processor dynamically by array index.  
+```javascript
+let flow = new Flow();//support ignoreError and returnXargs. 
+flow.add(processor1);
+flow.add(0,processor2);
+flow.remove(1);
+```
+Flow can create a new flow which only contains some of primary processors by filter function.
+```javascript
+let newFlow = flow.filter(function(processor){
+  return processos.asyn;
+});
+```
