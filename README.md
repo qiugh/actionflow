@@ -49,7 +49,7 @@ let xargs3 = [xarg1, xarg2, xarg3];
 * ignoreError(default false): When error occurs in some stage of the process flow, left functions will be skipped and the callback will be called if it exists.
 * returnXargs(default false): When it is true, xargs itself will be passed to the callback as the result.
 
-## three features
+## four features
 ### support various process situation 
 1. one asynchronous function with one xarg  
 ```javascript
