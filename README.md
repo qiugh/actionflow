@@ -4,7 +4,7 @@ npm install node-processor
 let asynFlow = require('node-processor').asynFlow;
 ```
 ## required params
-* funcs: single asynchronous function or asynchronous function array. For example:  
+### funcs: single asynchronous function or asynchronous function array.
 ```javascript
 function asyn1(options, callback) {
     console.log('asyn1', options);
