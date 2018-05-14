@@ -1,8 +1,18 @@
-## Installation
+# Table of Contents
+* [Installation](#installation)
+* [asynFlow](#asynflow)
+* [Processor](#processor)
+* [Flow](#flow)
+
+# Installation
 npm install node-processor 
 ```javascript
 let asynFlow = require('node-processor').asynFlow;
+let Processor = require('node-processor').Processor;
+let Flow = require('node-processor').Flow;
 ```
+
+# asynFlow
 ## required params
 ### funcs: single asynchronous function or asynchronous function array.
 ```javascript
@@ -89,9 +99,6 @@ asynFlow({funcs: funcs3, xargs: xargs2}, function(error,result){
 });
 ```
 
+# Processor
 
-
-
-
-
-
+# Flow

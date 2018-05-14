@@ -88,7 +88,7 @@ function asynFlow(options, callback) {
     func(xargs[xargIdx], function (error, result) {
       resultPool.push({ error, result });
       if (error && !ignoreError)
-        return callCb(new Error('Error occured in the ' + (funcIdx + 1) + ' step'));
+        return callCb(new Error('Error occured in the step ' + (funcIdx + 1)));
       funcIdx += funcStep;
       xargIdx += xargStep;
       executeFuncs();
