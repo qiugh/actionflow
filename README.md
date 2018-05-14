@@ -12,7 +12,7 @@ function asyn1(options, callback) {
 }
 function asyn2(options, callback) {
     console.log('asyn2', options);
-    setTimeout(callback, 1000, null, 'result2');
+    setTimeout(callback, 1000, 'this is an error', 'result2');
 }
 function asyn3(options, callback) {
     console.log('asyn3', options);
@@ -58,8 +58,40 @@ asynFlow({funcs: funcs3, xargs: xargs3});
 
 But, if the number of funcs is not equal with the number of xargs and they are neither 1, the asynFlow will not execute any function.  
 
-### support recording error and result of every function
+### support recording error and result of every function   
 ```javascript
 asynFlow({funcs: funcs3, xargs: xargs3}, function(error,result){
   console.log(result);
+  //result is an array contains three objects like this {error:null, result:'result'}.
 });
+```
+### support skipping left functions when error occurs
+```javascript
+asynFlow({funcs: funcs3, xargs: xargs3}, function(error,result){
+  console.log(error);
+  //error is an instance of Error with one description like 'Error occured in step 2'
+  console.log(result);
+  //result is an array contains two objects.
+});
+```
+### support return xargs in itself
+When the returnXargs is true, the number of xargs must be 1.   
+```javascript
+asynFlow({funcs: funcs3, xargs: xargs1}, function(error,result){
+  console.log(result);
+  //result is just xargs1.
+});
+```
+```javascript
+asynFlow({funcs: funcs3, xargs: xargs2}, function(error,result){
+  console.log(result);
+  //result is xargs2[0].
+});
+```
+
+
+
+
+
+
+
