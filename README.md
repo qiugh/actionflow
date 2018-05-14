@@ -46,8 +46,10 @@ let xargs2 = [xarg1];
 let xargs3 = [xarg1, xarg2, xarg3];
 ```
 ## optional params
-* ignoreError(default false): When error occurs in some stage of the process flow, left functions will be skipped and the callback will be called if it exists.
-* returnXargs(default false): When it is true, xargs itself will be passed to the callback as the result.
+* ignoreError(default false):   
+   When error occurs in some stage of the process flow, left functions will be skipped and the callback will be called if it exists.
+* returnXargs(default false):   
+   When it is true, xargs itself will be passed to the callback as the result.
 
 ## four features
 ### support various process situation 
