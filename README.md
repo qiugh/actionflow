@@ -148,6 +148,6 @@ Obviously, flow can execute just like asynFlow.
 ```javascript
 flow.execute(xargs1,function(error,result){
   console.log(error);//depends on whether there is a error and ignoreError.
-   console.log(result);////depends on returnXargs.
+  console.log(result);////depends on returnXargs.
 });
 ```
