@@ -23,7 +23,7 @@ let funcs1 = asyn1;
 let funcs2 = [asyn1];
 let funcs3 = [asyn1, asyn2, asyn3];
 ```
-### xargs: single object param or object param array. For example:
+### xargs: single object param or object param array.   
 ```javascript
 let xarg1 = { name: 'xarg1' };
 let xarg2 = { name: 'xarg2' };
@@ -55,7 +55,9 @@ asynFlow({funcs: funcs3, xargs: xargs1});
 ```javascript
 asynFlow({funcs: funcs3, xargs: xargs3});
 ```
-But, if the number of funcs is not equal with the number of xargs and they are neither 1, the asynFlow will not execute any function.
+
+But, if the number of funcs is not equal with the number of xargs and they are neither 1, the asynFlow will not execute any function.  
+
 ### support recording error and result of every function
 ```javascript
 asynFlow({funcs: funcs3, xargs: xargs3}, function(error,result){
