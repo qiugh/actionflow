@@ -1,8 +1,10 @@
 class Flow {
   constructor(options) {
-    options = options || {};
     this.processors = [];
+    if (!options || typeof options !== 'object')
+      options = {};
     this.ignoreError = options.ignoreError;
+    this.returnXargs = options.returnXargs;
   }
 
   add(processor, idx) {
@@ -16,22 +18,35 @@ class Flow {
   }
 
   remove(idx) {
-    if (idx !== undefined) {
+    if (idx !== undefined)
       return this.processors.splice(idx, 1);
-    }
     return this.processors.pop();
   }
 
   execute(xargs, callback) {
-    let self = this;
-    let funcs = self.processors.map(processor => processor.func);
-    asynFlow({ funcs: funcs, xargs: xargs, ignoreError: self.ignoreError }, callback);
+    let funcs = this.processors.map(processor => processor.func);
+    asynFlow({
+      funcs: funcs,
+      xargs: xargs,
+      ignoreError: this.ignoreError,
+      returnXargs: this.returnXargs
+    }, callback);
+  }
+
+  filter(filterFunc) {
+    let processors = this.processors.filter(filterFunc);
+    let filterFlow = new Flow();
+    filterFlow.ignoreError = this.ignoreError;
+    filterFlow.returnXargs = this.returnXargs;
+    filterFlow.processors = processors;
+    return filterFlow;
   }
 }
 
 class Processor {
   constructor(options) {
-    options = options || {};
+    if (!options || typeof options !== 'object')
+      options = {};
     if (typeof options.name !== 'string' || options.name === '')
       throw new Error('processor name must be valid string');
     if (typeof options.func !== 'function')
@@ -48,46 +63,46 @@ class Processor {
 }
 
 function asynFlow(options, callback) {
-  if (!options) return;
-  let funcs = options.funcs, xargs = options.xargs, ignoreError = options.ignoreError;
+  if (!options || typeof options !== 'object') return;
+  let funcs = options.funcs;
+  let xargs = options.xargs;
+  let ignoreError = options.ignoreError;
+  let returnXargs = options.returnXargs;
   if (typeof funcs === 'function') funcs = [funcs];
   if (!(funcs instanceof Array) || !funcs.length) return;
   if (!funcs.every(func => typeof func === 'function')) return;
-
   if (typeof xargs !== 'object') return;
   if (!(xargs instanceof Array)) xargs = [xargs];
   if (!xargs.every(xarg => typeof xarg === 'object')) return;
-
+  if (xargs.length !== 1 && returnXargs) return;
   if (funcs.length !== xargs.length && funcs.length !== 1 && xargs.length !== 1) return;
-
-  let funcIdx = 0, xargIdx = 0, tmpResults = [],
-    onlyOne = (funcs.length == 1 && xargs.length == 1);
+  let funcIdx = 0, xargIdx = 0, resultPool = [];
+  let funcStep = (funcs.length == 1) ? ((xargs.length == 1) ? 1 : 0) : 1;
+  let xargStep = (xargs.length == 1) ? ((funcs.length == 1) ? 1 : 0) : 1;
 
   executeFuncs();
   function executeFuncs() {
-    if (funcIdx >= funcs.length || xargIdx >= xargs.length) {
-      if (typeof callback === 'function') callback(null, tmpResults);
-      return;
-    }
-    let func = funcs[funcIdx], xarg = xargs[xargIdx];
-    func(xarg, function (error, result) {
-      tmpResults.push({ error, result });
-      if (error && !ignoreError) {
-        if (typeof callback === 'function') {
-          let e = new Error();
-          e.step = funcIdx;
-          callback(e, tmpResults);
-        }
-        return;
-      }
-      if (onlyOne) {
-        if (typeof callback === 'function') callback(null, tmpResults);
-        return;
-      }
-      funcIdx += (funcs.length == 1 ? 0 : 1);
-      xargIdx += (xargs.length == 1 ? 0 : 1);
+    if (funcIdx >= funcs.length || xargIdx >= xargs.length)
+      return callCb();
+    let func = funcs[funcIdx];
+    func(xargs[xargIdx], function (error, result) {
+      resultPool.push({ error, result });
+      if (error && !ignoreError)
+        return callCb(new Error('Error occured in the ' + (funcIdx + 1) + ' step'));
+      funcIdx += funcStep;
+      xargIdx += xargStep;
       executeFuncs();
     });
+  }
+
+  function callCb(error) {
+    if (typeof callback !== 'function')
+      return;
+    if (returnXargs) {
+      callback(error, xargs[0]);
+    } else {
+      callback(error, resultPool);
+    }
   }
 }
 
