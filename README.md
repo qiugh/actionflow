@@ -88,16 +88,17 @@ asynFlow({funcs: funcs3, xargs: xargs3}, function(error,result){
   //result is an array contains two objects.
 });
 ```
+If ignoreError is set to be true, asynFlow will ignore every error and execute to the last step.
 ### support return xargs in itself
 When the returnXargs is true, the number of xargs must be 1.   
 ```javascript
-asynFlow({funcs: funcs3, xargs: xargs1}, function(error,result){
+asynFlow({funcs: funcs3, xargs: xargs1, returnXargs:true}, function(error,result){
   console.log(result);
   //result is just xargs1.
 });
 ```
 ```javascript
-asynFlow({funcs: funcs3, xargs: xargs2}, function(error,result){
+asynFlow({funcs: funcs3, xargs: xargs2, returnXargs:true}, function(error,result){
   console.log(result);
   //result is xargs2[0].
 });
