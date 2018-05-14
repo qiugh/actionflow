@@ -1,3 +1,5 @@
+A simple flow wrapper for asynchronous function that can avoid callback hell on the basis of execution order.
+
 # Table of Contents
 * [Installation](#installation)
 * [asynFlow](#asynflow)
@@ -139,5 +141,13 @@ Flow can create a new flow which only contains some of primary processors by fil
 ```javascript
 let newFlow = flow.filter(function(processor){
   return processos.asyn;
+});
+```
+
+Obviously, flow can execute just like asynFlow.
+```javascript
+flow.execute(xargs1,function(error,result){
+  console.log(error);//depends on whether there is a error and ignoreError.
+   console.log(result);////depends on returnXargs.
 });
 ```
