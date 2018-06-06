@@ -105,7 +105,7 @@ asynFlow({funcs: funcs3, xargs: xargs2, returnXargs:true}, function(error,result
 ```
 
 # Processor
-In order to be compatible with synchronous function and to make a certain abstract of process flow, processor class is necessary. 
+In order to be compatible with synchronous function and to make a certain abstract of process flow, processor class emerges as the times require. 
 One processor is an object which contains a name and a function with a flag to mark whether it is asynchronous.  
 ```javascript
 let processor1 = new Processor({
