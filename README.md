@@ -1,4 +1,4 @@
-A simple flow wrapper for asynchronous function that can avoid callback hell on the basis of execution order. https://qiugh.github.io/node-processor/
+A simple flow wrapper for asynchronous function that can avoid callback hell on the basis of execution order. 
 
 # Table of Contents
 * [Installation](#installation)
