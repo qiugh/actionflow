@@ -140,12 +140,6 @@ flow.add(processor1);
 flow.add(0,processor2);
 flow.remove(1);
 ```
-Flow can create a new flow which only contains some of primary processors by filter function.
-```javascript
-let newFlow = flow.filter(function(processor){
-  return processos.asyn;
-});
-```
 
 Obviously, flow can execute just like asynFlow.
 ```javascript
