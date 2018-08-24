@@ -32,15 +32,6 @@ class Flow {
       returnXargs: this.returnXargs
     }, callback);
   }
-
-  filter(filterFunc) {
-    let processors = this.processors.filter(filterFunc);
-    let filterFlow = new Flow();
-    filterFlow.ignoreError = this.ignoreError;
-    filterFlow.returnXargs = this.returnXargs;
-    filterFlow.processors = processors;
-    return filterFlow;
-  }
 }
 
 class Processor {
